@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenamiento de Piernas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 20px;
+            padding: 10px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .exercise {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .series {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+        .series label {
+            margin-left: 8px;
+            width: 60px;
+        }
+        .series input[type="text"] {
+            margin-left: 8px;
+            width: 50px;
+            padding: 4px;
+        }
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Entrenamiento de Piernas</h1>
+    <div id="exercises">
+        <div class="exercise">
+            <h2>Sentadilla Búlgara</h2>
+            <div class="series">
+                <input type="checkbox" class="serie" data-exercise="Sentadilla Búlgara">
+                <label>Serie 1</label>
+                <input type="text" placeholder="Peso (kg)" class="peso" data-exercise="Sentadilla Búlgara" data-series="Serie 1">
+            </div>
+            <div class="series">
+                <input type="checkbox" class="serie" data-exercise="Sentadilla Búlgara">
+                <label>Serie 2</label>
+                <input type="text" placeholder="Peso (kg)" class="peso" data-exercise="Sentadilla Búlgara" data-series="Serie 2">
+            </div>
+            <div class="series">
+                <input type="checkbox" class="serie" data-exercise="Sentadilla Búlgara">
+                <label>Serie 3</label>
+                <input type="text" placeholder="Peso (kg)" class="peso" data-exercise="Sentadilla Búlgara" data-series="Serie 3">
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h2>Prensa de Piernas</h2>
+            <div class="series">
+                <input type="checkbox" class="serie" data-exercise="Prensa de Piernas">
+                <label>Serie 1</label>
+                <input type="text" placeholder="Peso (kg)" class="peso" data-exercise="Prensa de Piernas" data-series="Serie 1">
+            </div>
+            <div class="series">
+                <input type="checkbox" class="serie" data-exercise="Prensa de Piernas">
+                <label>Serie 2</label>
+                <input type="text" placeholder="Peso (kg)" class="peso" data-exercise="Prensa de Piernas" data-series="Serie 2">
+            </div>
+            <div class="series">
+                <input type="checkbox" class="serie" data-exercise="Prensa de Piernas">
+                <label>Serie 3</label>
+                <input type="text" placeholder="Peso (kg)" class="peso" data-exercise="Prensa de Piernas" data-series="Serie 3">
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h2>Extensión de Cuádriceps</h2>
+            <div class="series">
+                <input type="checkbox" class="serie" data-exercise="Extensión de Cuádriceps">
+                <label>Serie 1</label>
+                <input type="text" placeholder="Peso (kg)" class="peso" data-exercise="Extensión de Cuádriceps" data-series="Serie 1">
+            </div>
+            <div class="series">
+                <input type="checkbox" class="serie" data-exercise="Extensión de Cuádriceps">
+                <label>Serie 2</label>
+                <input type="text" placeholder="Peso (kg)" class="peso" data-exercise="Extensión de Cuádriceps" data-series="Serie 2">
+            </div>
+        </div>
+    </div>
+
+    <button onclick="exportData()">Exportar a CSV</button>
+
+    <script>
+        let startTime = null;
+
+        document.querySelectorAll(".serie").forEach(checkbox => {
+            checkbox.addEventListener("change", function () {
+                if (this.checked) {
+                    const now = new Date();
+                    const exercise = this.getAttribute("data-exercise");
+                    const seriesLabel = this.nextElementSibling.textContent.trim();
+                    const pesoInput = document.querySelector(`.peso[data-exercise="${exercise}"][data-series="${seriesLabel}"]`);
+                    const peso = pesoInput ? pesoInput.value : "N/A";
+                    const timeBetween = startTime ? (now - startTime) / 1000 : 0;
+                    const data = {
+                        date: now.toLocaleDateString(),
+                        time: now.toLocaleTimeString(),
+                        exercise: exercise,
+                        series: seriesLabel,
+                        peso: peso,
+                        time_between_series: timeBetween.toFixed(2)
+                    };
+                    saveData(data);
+                    startTime = now;
+                }
+            });
+        });
+
+        function saveData(data) {
+            let logs = JSON.parse(localStorage.getItem("workoutLogs")) || [];
+            logs.push(data);
+            localStorage.setItem("workoutLogs", JSON.stringify(logs));
+        }
+
+        function exportData() {
+            const logs = JSON.parse(localStorage.getItem("workoutLogs")) || [];
+            let csvContent = "Fecha,Hora,Ejercicio,Serie,Peso (kg),Tiempo entre Series (segundos)\n";
+            logs.forEach(log => {
+                csvContent += `${log.date},${log.time},${log.exercise},${log.series},${log.peso},${log.time_between_series}\n`;
+            });
+            const blob = new Blob([csvContent], { type: "text/csv" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "entrenamiento_piernas.csv";
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+
+</body>
+</html>
