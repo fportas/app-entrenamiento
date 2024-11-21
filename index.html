@@ -5,111 +5,205 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrenamiento de Piernas</title>
     <style>
+        /* Colores y fuentes principales */
+        :root {
+            --fondo: #d0d3d4;
+            --recuadro: #2f3133;
+            --texto-claro: #ffffff;
+            --texto-obscuro: #333333;
+            --boton-hover: #444;
+            --tipografia: 'Helvetica', sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
+            font-family: var(--tipografia);
+            background: radial-gradient(circle, var(--fondo) 70%, #bcbfc1);
+            color: var(--texto-obscuro);
             margin: 0;
-            padding: 10px;
+            padding: 0;
         }
-        .exercise {
-            background: linear-gradient(145deg, #d4d4d4, #e9e9e9);
-            border-radius: 8px;
-            padding: 22px; /* Más espacio */
-            margin-bottom: 30px; /* Más espacio entre ejercicios */
-            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25); /* Sombra más intensa */
+
+        header {
+            text-align: center;
+            padding: 20px 0;
         }
-        h2 {
-            font-size: 1.5em; /* Letra más grande */
-            margin-top: 0;
+
+        header h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--texto-obscuro);
+            margin: 0;
         }
-        label, input {
-            font-size: 1.2em; /* Letra más grande */
-            margin-right: 8px;
-        }
-        input[type="number"] {
-            width: 70px;
-            font-size: 1em;
-            padding: 5px;
-        }
-        input[type="checkbox"] {
-            transform: scale(1.8); /* Checkbox más grande */
-            margin-right: 10px;
+
+        .button-start {
+            display: inline-block;
+            background-color: var(--texto-obscuro);
+            color: var(--texto-claro);
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
             cursor: pointer;
+            text-decoration: none;
+            margin: 15px 0;
         }
+
+        .button-start:hover {
+            background-color: var(--boton-hover);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .exercise {
+            background: radial-gradient(circle, var(--recuadro) 70%, #1e2022);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+            color: var(--texto-claro);
+        }
+
+        h2 {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--texto-claro);
+        }
+
+        .exercise-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 1em;
+            margin-right: 10px;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            font-size: 1em;
+            border: 1px solid var(--texto-claro);
+            border-radius: 5px;
+            background-color: #fff;
+            color: var(--texto-obscuro);
+        }
+
+        input[type="checkbox"] {
+            transform: scale(1.5);
+            margin-left: 10px;
+        }
+
         .button {
             display: block;
             width: 100%;
-            padding: 25px; /* Botón más alto */
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 5px;
+            padding: 20px;
+            background-color: var(--texto-obscuro);
+            color: var(--texto-claro);
             font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 30px;
         }
+
         .button:hover {
-            background-color: #555;
+            background-color: var(--boton-hover);
         }
     </style>
 </head>
 <body>
-    <h1>Registro de Entrenamiento de Piernas</h1>
+    <header>
+        <h1>Registro de Entrenamiento</h1>
+        <button class="button-start" onclick="startSession()">Iniciar Entrenamiento</button>
+    </header>
+    <div class="container">
+        <!-- Ejercicio 1 -->
+        <div class="exercise">
+            <h2>Ejercicio 1: Sentadillas</h2>
+            <div class="exercise-row">
+                <label for="peso1_1">Serie 1:</label>
+                <input type="number" id="peso1_1" min="0">
+                <input type="checkbox" id="serie1_1" onclick="checkSerie('peso1_1', 'serie1_1')">
+            </div>
+            <div class="exercise-row">
+                <label for="peso1_2">Serie 2:</label>
+                <input type="number" id="peso1_2" min="0">
+                <input type="checkbox" id="serie1_2" onclick="checkSerie('peso1_2', 'serie1_2')">
+            </div>
+            <div class="exercise-row">
+                <label for="peso1_3">Serie 3:</label>
+                <input type="number" id="peso1_3" min="0">
+                <input type="checkbox" id="serie1_3" onclick="checkSerie('peso1_3', 'serie1_3')">
+            </div>
+        </div>
 
-    <!-- Ejercicio 1 -->
-    <div class="exercise">
-        <h2>Ejercicio 1: Sentadillas</h2>
-        <label>Serie 1 - Peso:</label><input type="number" id="peso1_1" min="0" oninput="validarPeso(this)">
-        <input type="checkbox" id="serie1_1" onclick="checkSerie('peso1_1', 'serie1_1')">
-        <br>
-        <label>Serie 2 - Peso:</label><input type="number" id="peso1_2" min="0" oninput="validarPeso(this)">
-        <input type="checkbox" id="serie1_2" onclick="checkSerie('peso1_2', 'serie1_2')">
-        <br>
-        <label>Serie 3 - Peso:</label><input type="number" id="peso1_3" min="0" oninput="validarPeso(this)">
-        <input type="checkbox" id="serie1_3" onclick="checkSerie('peso1_3', 'serie1_3')">
+        <!-- Ejercicio 2 -->
+        <div class="exercise">
+            <h2>Ejercicio 2: Prensa de Piernas</h2>
+            <div class="exercise-row">
+                <label for="peso2_1">Serie 1:</label>
+                <input type="number" id="peso2_1" min="0">
+                <input type="checkbox" id="serie2_1" onclick="checkSerie('peso2_1', 'serie2_1')">
+            </div>
+            <div class="exercise-row">
+                <label for="peso2_2">Serie 2:</label>
+                <input type="number" id="peso2_2" min="0">
+                <input type="checkbox" id="serie2_2" onclick="checkSerie('peso2_2', 'serie2_2')">
+            </div>
+            <div class="exercise-row">
+                <label for="peso2_3">Serie 3:</label>
+                <input type="number" id="peso2_3" min="0">
+                <input type="checkbox" id="serie2_3" onclick="checkSerie('peso2_3', 'serie2_3')">
+            </div>
+        </div>
+
+        <!-- Ejercicio 3 -->
+        <div class="exercise">
+            <h2>Ejercicio 3: Extensión de Piernas</h2>
+            <div class="exercise-row">
+                <label for="peso3_1">Serie 1:</label>
+                <input type="number" id="peso3_1" min="0">
+                <input type="checkbox" id="serie3_1" onclick="checkSerie('peso3_1', 'serie3_1')">
+            </div>
+            <div class="exercise-row">
+                <label for="peso3_2">Serie 2:</label>
+                <input type="number" id="peso3_2" min="0">
+                <input type="checkbox" id="serie3_2" onclick="checkSerie('peso3_2', 'serie3_2')">
+            </div>
+            <div class="exercise-row">
+                <label for="peso3_3">Serie 3:</label>
+                <input type="number" id="peso3_3" min="0">
+                <input type="checkbox" id="serie3_3" onclick="checkSerie('peso3_3', 'serie3_3')">
+            </div>
+        </div>
+
+        <!-- Botón finalizar -->
+        <button class="button" onclick="endSession()">Finalizar Sesión</button>
     </div>
-
-    <!-- Ejercicio 2 -->
-    <div class="exercise">
-        <h2>Ejercicio 2: Prensa de piernas</h2>
-        <label>Serie 1 - Peso:</label><input type="number" id="peso2_1" min="0" oninput="validarPeso(this)">
-        <input type="checkbox" id="serie2_1" onclick="checkSerie('peso2_1', 'serie2_1')">
-        <br>
-        <label>Serie 2 - Peso:</label><input type="number" id="peso2_2" min="0" oninput="validarPeso(this)">
-        <input type="checkbox" id="serie2_2" onclick="checkSerie('peso2_2', 'serie2_2')">
-        <br>
-        <label>Serie 3 - Peso:</label><input type="number" id="peso2_3" min="0" oninput="validarPeso(this)">
-        <input type="checkbox" id="serie2_3" onclick="checkSerie('peso2_3', 'serie2_3')">
-    </div>
-
-    <!-- Ejercicio 3 -->
-    <div class="exercise">
-        <h2>Ejercicio 3: Extension de piernas</h2>
-        <label>Serie 1 - Peso:</label><input type="number" id="peso3_1" min="0" oninput="validarPeso(this)">
-        <input type="checkbox" id="serie3_1" onclick="checkSerie('peso3_1', 'serie3_1')">
-        <br>
-        <label>Serie 2 - Peso:</label><input type="number" id="peso3_2" min="0" oninput="validarPeso(this)">
-        <input type="checkbox" id="serie3_2" onclick="checkSerie('peso3_2', 'serie3_2')">
-        <br>
-        <label>Serie 3 - Peso:</label><input type="number" id="peso3_3" min="0" oninput="validarPeso(this)">
-        <input type="checkbox" id="serie3_3" onclick="checkSerie('peso3_3', 'serie3_3')">
-    </div>
-
-    <!-- Boton para exportar a CSV -->
-    <button class="button" onclick="exportToCSV()">Exportar a CSV</button>
 
     <script>
         const tiempos = {};
+        let sessionStarted = false;
 
-        function validarPeso(input) {
-            if (input.value < 0) {
-                input.value = 0;
-                alert("El peso no puede ser negativo.");
+        function startSession() {
+            if (!sessionStarted) {
+                alert("Sesión de entrenamiento iniciada.");
+                sessionStarted = true;
             }
         }
 
         function checkSerie(pesoId, serieId) {
+            if (!sessionStarted) startSession();
             const pesoInput = document.getElementById(pesoId);
             const serieCheckbox = document.getElementById(serieId);
 
@@ -126,31 +220,26 @@
             }
         }
 
-        function exportToCSV() {
-            const rows = [["Ejercicio", "Serie", "Peso", "Hora de Realizacion"]];
+        function endSession() {
+            const rows = [["Ejercicio", "Serie", "Peso", "Hora"]];
             const ejercicios = [
                 { nombre: "Sentadillas", series: ["peso1_1", "serie1_1", "peso1_2", "serie1_2", "peso1_3", "serie1_3"] },
-                { nombre: "Prensa de piernas", series: ["peso2_1", "serie2_1", "peso2_2", "serie2_2", "peso2_3", "serie2_3"] },
-                { nombre: "Extension de piernas", series: ["peso3_1", "serie3_1", "peso3_2", "serie3_2", "peso3_3", "serie3_3"] },
+                { nombre: "Prensa de Piernas", series: ["peso2_1", "serie2_1", "peso2_2", "serie2_2", "peso2_3", "serie2_3"] },
+                { nombre: "Extensión de Piernas", series: ["peso3_1", "serie3_1", "peso3_2", "serie3_2", "peso3_3", "serie3_3"] }
             ];
 
-            ejercicios.forEach((ejercicio) => {
-                for (let i = 0; i < ejercicio.series.length; i += 2) {
-                    const peso = document.getElementById(ejercicio.series[i]).value || "0";
-                    const tiempo = tiempos[ejercicio.series[i + 1]] || "";
-                    rows.push([ejercicio.nombre, `Serie ${i / 2 + 1}`, peso, tiempo]);
+            ejercicios.forEach((ejercicio, i) => {
+                for (let j = 1; j <= 3; j++) {
+                    const peso = document.getElementById(`peso${i + 1}_${j}`).value || "No registrado";
+                    const hora = tiempos[`serie${i + 1}_${j}`] || "No completada";
+                    rows.push([ejercicio.nombre, `Serie ${j}`, peso, hora]);
                 }
             });
 
-            let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "entrenamiento_piernas.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            console.table(rows);
+            alert("Sesión finalizada. Datos enviados al servidor.");
         }
     </script>
 </body>
 </html>
+
